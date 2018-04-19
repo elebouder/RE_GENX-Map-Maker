@@ -85,7 +85,7 @@ public class MapGen extends JPanel {
     Modifies: this
     Effect: Resets everthing to initialised state
      */
-    public void clearAll() {
+    public static void clearAll() {
         map.clearMap();
         segList.clear();
         trackNumSegAdded.clear();

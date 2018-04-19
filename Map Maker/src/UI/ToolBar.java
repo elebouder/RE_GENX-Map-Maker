@@ -53,6 +53,7 @@ public class ToolBar  extends JToolBar {
         add(bFriction);
         add(bErase);
         add(bUndoSeg);
+        add(bClearMap);
     }
     public static ToolBar getInstance() {
         if(onlyOne == null) {
@@ -84,6 +85,9 @@ public class ToolBar  extends JToolBar {
             }
             if(e.getActionCommand().equals(bUndoSeg.getActionCommand())) {
                 MapGen.undoNewSeg();
+            }
+            if(e.getActionCommand().equals(bClearMap.getActionCommand())) {
+                MapGen.clearAll();
             }
         }
     }
