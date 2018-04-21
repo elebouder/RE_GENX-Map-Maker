@@ -29,8 +29,8 @@ public class SegTemp {
     }
 
     public int getVal() {return segState.stateVal;}
-    public int getPixelsY() {return SEG_PIXELS_Y;}
-    public int getPixelsX() {return SEG_PIXELS_X;}
+    public static int getPixelsY() {return SEG_PIXELS_Y;}
+    public static int getPixelsX() {return SEG_PIXELS_X;}
     public int getPosX() {return posX;}
     public int getPosY() {return posY;}
 

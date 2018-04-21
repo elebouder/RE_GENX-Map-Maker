@@ -64,12 +64,10 @@ public class MapTemp {
     Effect: checks if a pixel is out of bound of the feature map
     Parameters: possible x or y values on the feature map
      */
-    public boolean outOfBoundPixelX(int x) {
-        return x < 0 || x >= mapPixelsX;
-    }
-    public boolean outOfBoundPixelY(int y) {
-        return y < 0 || y >= mapPixelsY;
-    }
+    public boolean outOfUpperBoundX(int x) {return x >= mapPixelsX;}
+    public boolean outOfUpperBoundY(int y) {return y >= mapPixelsY;}
+    public boolean outOfLowerBoundX(int x) {return x < 0;}
+    public boolean outOfLowerBoundY(int y) {return y < 0;}
 
     /*
     Modifies: this
@@ -77,11 +75,14 @@ public class MapTemp {
             the user wants to place the segment outside the map bounds
      */
     public void addSeg(SegTemp s) {
-        while(outOfBoundPixelX(s.getXBound())) extendPixelsX();
-        while(outOfBoundPixelY(s.getYBound())) extendPixelsY();
+        while(outOfUpperBoundX(s.getXBound())) extendPixelsX();
+        while(outOfUpperBoundY(s.getYBound())) extendPixelsY();
         for(int i = 0; i < s.getPixelsY(); ++i) {
             for (int j = 0; j < s.getPixelsX(); ++j) {
-                map[s.getPosX() + j][s.getPosY() + i] = s.getVal();
+                if(!outOfLowerBoundX(s.getPosX() - (s.getPixelsX()/2) + j)
+                        && !outOfLowerBoundY(s.getPosY() - (s.getPixelsY()/2) + i))
+                map[s.getPosX() - (s.getPixelsX()/2) + j][s.getPosY() - (s.getPixelsY()/2) + i]
+                        = s.getVal();
             }
         }
     }

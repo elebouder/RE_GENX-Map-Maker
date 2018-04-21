@@ -51,6 +51,8 @@ public class ToolBar  extends JToolBar {
         initialiseButtons();
         add(bNormal);
         add(bFriction);
+        add(bStartLine);
+        add(bFinishLine);
         add(bErase);
         add(bUndoSeg);
         add(bClearMap);
@@ -82,6 +84,12 @@ public class ToolBar  extends JToolBar {
 
             if(e.getActionCommand().equals(bErase.getActionCommand())) {
                 MapGen.setRoadState(RoadState.ERASE);
+            }
+            if(e.getActionCommand().equals(bStartLine.getActionCommand())) {
+                MapGen.setRoadState(RoadState.START_LINE);
+            }
+            if(e.getActionCommand().equals(bFinishLine.getActionCommand())) {
+                MapGen.setRoadState(RoadState.FINISH_LINE);
             }
             if(e.getActionCommand().equals(bUndoSeg.getActionCommand())) {
                 MapGen.undoNewSeg();
