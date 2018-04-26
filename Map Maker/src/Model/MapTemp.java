@@ -88,6 +88,18 @@ public class MapTemp {
     }
 
     /*
+    Modifies: this.map
+    Effect: Removes the specified segment from the feature map
+     */
+    public void removeSeg(SegTemp s) {
+        for(int i = 0; i < s.getPixelsY(); ++i) {
+            for (int j = 0; j < s.getPixelsX(); ++j) {
+                    map[s.getPosX() - (s.getPixelsX()/2) + j][s.getPosY() - (s.getPixelsY()/2) + i] = 0;
+            }
+        }
+    }
+
+    /*
     Modifies: this
     Effect: Resets the map, all values set to 0, map is set back to original size
      */
@@ -97,9 +109,36 @@ public class MapTemp {
         this.map = new int[mapPixelsX][mapPixelsY];
     }
 
+    /*
+    Modifies: this.pixelsX, this.pixelsY
+    Effect: Compacts the map
+    NOTE: Currently broken, causes an ArrayOutOfBounds Wxception...will fix later
+     */
     public void compactMap() {
-        //Code for compacting map
+        int greatestPixelX = 13; //i just randomly chose 13
+        int greatestPixelY = 13;
+        for(int i = mapPixelsX; (i > MAP_PIXLES_LENGTH && greatestPixelX == 13); --i) {
+            for(int j = 0; j < mapPixelsY; ++j) {
+                if(map[i][j] != 0) greatestPixelX = i;
+            }
+        }
+
+        for(int j = mapPixelsY; (j > MAP_PIXELS_HEIGHT && greatestPixelY == 13); --j) {
+            for(int i = 0; i < mapPixelsX; ++i) {
+                if(map[i][j] != 0) greatestPixelY = j;
+            }
+        }
+        int[][] temp = new int[greatestPixelX][greatestPixelY];
+        for(int i = 0; i < greatestPixelX; ++i) {
+            for(int j = 0; j < greatestPixelY; ++j) {
+                temp[i][j] = this.map[i][j];
+            }
+        }
+        this.map = temp;
+        mapPixelsX = greatestPixelX;
+        mapPixelsY = greatestPixelY;
     }
+
 }
 
 

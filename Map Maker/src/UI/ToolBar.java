@@ -1,5 +1,6 @@
 package UI;
 
+import Model.ManageMaps;
 import Model.RoadState;
 
 import javax.swing.*;
@@ -56,6 +57,7 @@ public class ToolBar  extends JToolBar {
         add(bErase);
         add(bUndoSeg);
         add(bClearMap);
+        add(bSaveMap);
     }
     public static ToolBar getInstance() {
         if(onlyOne == null) {
@@ -67,8 +69,6 @@ public class ToolBar  extends JToolBar {
 
     /*
     * ActionListener for all Jbuttons on ToolBar
-    * Uses MapGen.checkSeg to determine if the MapGen has already set up a start line
-      a finish line
      */
     private class ButtonHandler implements ActionListener {
 
@@ -96,6 +96,9 @@ public class ToolBar  extends JToolBar {
             }
             if(e.getActionCommand().equals(bClearMap.getActionCommand())) {
                 MapGen.clearAll();
+            }
+            if(e.getActionCommand().equals(bSaveMap.getActionCommand())) {
+                ManageMaps.saveImage();
             }
         }
     }

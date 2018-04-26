@@ -62,16 +62,20 @@ public class MapGen extends JPanel {
         return onlyOne;
     }
 
+    public MapTemp getMap() {return map;}
+
     /*
     Modifies: this.map, this.SegList, this.trackNumSegAdded
     Effect: undo the user's latest input
      */
     public static void undoNewSeg() {
-        for(int i = 0; i < trackNumSegAdded.getLast(); ++i) {
-            map.addSeg(segList.getLast());
-            segList.removeLast();
+        if(!trackNumSegAdded.isEmpty()) {
+            for (int i = 0; i < trackNumSegAdded.getLast(); ++i) {
+                map.removeSeg(segList.getLast());
+                segList.removeLast();
+            }
+            trackNumSegAdded.removeLast();
         }
-        trackNumSegAdded.removeLast();
     }
     /*
     Modifies: this.currentRoadState
@@ -83,7 +87,7 @@ public class MapGen extends JPanel {
     }
     /*
     Modifies: this
-    Effect: Resets everthing to initialised state
+    Effect: Resets everything to initialised state
      */
     public static void clearAll() {
         map.clearMap();
@@ -97,6 +101,11 @@ public class MapGen extends JPanel {
         map.checkSegExist(r);
     }
 
+    public Graphics getGraphics(Graphics g) {
+        this.print(g);
+        return g;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -105,6 +114,7 @@ public class MapGen extends JPanel {
         }
         repaint();
     }
+
 
     /*
     * Nested MouseAdapter that handles the user's mouse inputs
