@@ -6,6 +6,7 @@ import Model.RoadState;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /*
 * JToolBar that holds all JButtons that effect MapGen
@@ -98,7 +99,10 @@ public class ToolBar  extends JToolBar {
                 MapGen.clearAll();
             }
             if(e.getActionCommand().equals(bSaveMap.getActionCommand())) {
-                ManageMaps.saveImage();
+                try {
+                    ManageMaps.saveImage();
+                    ManageMaps.saveMap();
+                } catch (IOException error) {error.printStackTrace();}
             }
         }
     }

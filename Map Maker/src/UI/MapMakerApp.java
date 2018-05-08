@@ -5,6 +5,8 @@ package UI;
 * Handles parsing MapGen graphics and MapGEn.map to ManManager for saving
  */
 
+import Model.MapTemp;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -28,6 +30,9 @@ public class MapMakerApp extends JFrame {
         BufferedImage bImage = new BufferedImage(length,height,BufferedImage.TYPE_INT_RGB);
         generator.getGraphics(bImage.getGraphics());
         return bImage;
+    }
+    public static MapTemp getMap() {
+        return generator.getMap();
     }
 
     public static void main(String[] args) {new MapMakerApp();}
