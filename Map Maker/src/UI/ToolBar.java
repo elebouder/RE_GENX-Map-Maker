@@ -14,17 +14,18 @@ import java.io.IOException;
  */
 public class ToolBar  extends JToolBar {
     private static ToolBar onlyOne;
+    private JFileChooser fileChooser;
 
-    JButton bNormal = new JButton("Normal Road");
-    JButton bFriction = new JButton("Friction Road");
-    JButton bErase = new JButton("Erase Road");
-    JButton bStartLine = new JButton("Start Line");
-    JButton bFinishLine = new JButton("Finish Line");
-    JButton bUndoSeg = new JButton("Undo");
-    JButton bClearMap = new JButton("Clear");
-    JButton bSaveMap = new JButton("Save");
+    private JButton bNormal = new JButton("Normal Road");
+    private JButton bFriction = new JButton("Friction Road");
+    private JButton bErase = new JButton("Erase Road");
+    private JButton bStartLine = new JButton("Start Line");
+    private JButton bFinishLine = new JButton("Finish Line");
+    private JButton bUndoSeg = new JButton("Undo");
+    private JButton bClearMap = new JButton("Clear");
+    private JButton bSaveMap = new JButton("Save");
 
-    ButtonHandler bHandler = new ButtonHandler();
+    private ButtonHandler bHandler = new ButtonHandler();
 
     private void initialiseButtons() {
         bNormal.setActionCommand("NORMAL");
@@ -46,11 +47,16 @@ public class ToolBar  extends JToolBar {
         bClearMap.addActionListener(bHandler);
         bSaveMap.addActionListener(bHandler);
     }
+    private void initializedFileChooser() {
+        fileChooser = new JFileChooser("./Map Maker/Maps");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    }
 
     private ToolBar() {
         setRollover(true);
         setFloatable(false);
         initialiseButtons();
+        initializedFileChooser();
         add(bNormal);
         add(bFriction);
         add(bStartLine);
@@ -99,10 +105,12 @@ public class ToolBar  extends JToolBar {
                 MapGen.clearAll();
             }
             if(e.getActionCommand().equals(bSaveMap.getActionCommand())) {
-                try {
-                    ManageMaps.saveImage();
-                    ManageMaps.saveMap();
-                } catch (IOException error) {error.printStackTrace();}
+               int returnVal = fileChooser.showSaveDialog(bSaveMap);
+               if(returnVal == JFileChooser.APPROVE_OPTION) {
+                   try {
+                       ManageMaps.save(fileChooser.getSelectedFile());
+                   } catch (IOException error) {error.printStackTrace();}
+               }
             }
         }
     }
