@@ -14,7 +14,6 @@ import java.io.IOException;
  */
 public class ToolBar  extends JToolBar {
     private static ToolBar onlyOne;
-    private JFileChooser fileChooser;
 
     private JButton bNormal = new JButton("Normal Road");
     private JButton bFriction = new JButton("Friction Road");
@@ -47,16 +46,11 @@ public class ToolBar  extends JToolBar {
         bClearMap.addActionListener(bHandler);
         bSaveMap.addActionListener(bHandler);
     }
-    private void initializedFileChooser() {
-        fileChooser = new JFileChooser("./Map Maker/Maps");
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    }
 
     private ToolBar() {
         setRollover(true);
         setFloatable(false);
         initialiseButtons();
-        initializedFileChooser();
         add(bNormal);
         add(bFriction);
         add(bStartLine);
@@ -105,12 +99,9 @@ public class ToolBar  extends JToolBar {
                 MapGen.clearAll();
             }
             if(e.getActionCommand().equals(bSaveMap.getActionCommand())) {
-               int returnVal = fileChooser.showSaveDialog(bSaveMap);
-               if(returnVal == JFileChooser.APPROVE_OPTION) {
-                   try {
-                       ManageMaps.save(fileChooser.getSelectedFile());
-                   } catch (IOException error) {error.printStackTrace();}
-               }
+                try {
+                    ManageMaps.save();
+                } catch (IOException error) {error.printStackTrace();}
             }
         }
     }
