@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 public class MapMakerApp extends JFrame {
     private static MapGen generator = MapGen.getInstance();
     private static ToolBar toolBar = ToolBar.getInstance();
-    private static JFileChooser fileChooser = new JFileChooser("");
+    private static JFileChooser fileChooser = new JFileChooser(".\\Map Maker\\maps");
 
     public MapMakerApp() {
         getContentPane().add(generator, BorderLayout.CENTER);
