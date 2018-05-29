@@ -20,7 +20,7 @@ public class MapMakerApp extends JFrame {
         getContentPane().add(toolBar, BorderLayout.PAGE_START);
         pack();
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public static BufferedImage getBufferedImage() {
@@ -58,9 +58,40 @@ public class MapMakerApp extends JFrame {
         );
         if(JOPStr !=null && JOPStr.length() >0) {return JOPStr;}
         else {
-            System.out.println("Enter a name to save");
+            alertDialog("Enter a filename to save");
             return null;
         }
+    }
+    public static void messageDialog(String s) {
+        JOptionPane.showMessageDialog(
+                generator,
+                s
+        );
+    }
+    public static void alertDialog(String s) {
+        JOptionPane.showMessageDialog(
+                generator,
+                s,
+                "Alert",
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+    public static void errorDialog(String s) {
+        JOptionPane.showMessageDialog(
+                generator,
+                s,
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
+    public static int confirmDialog(String s) {
+        return JOptionPane.showConfirmDialog(
+                generator,
+                s,
+                "Please Confirm",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
     }
 
     public static void main(String[] args) {new MapMakerApp();}

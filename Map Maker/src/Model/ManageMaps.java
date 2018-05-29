@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 * * JArray.....or something
  */
 public class ManageMaps {
-    private static String savePath;
     private static String mapName;
     private static File saveFile;
 
@@ -30,7 +29,6 @@ public class ManageMaps {
         BufferedImage bImage = MapMakerApp.getBufferedImage();
         File mapImage = new File(saveFile.getAbsolutePath() +  "/" + mapName + ".png");
         ImageIO.write(bImage, "png", mapImage);
-        System.out.println("Saved map to" + mapImage.getAbsolutePath());
     }
 
     private static void saveMap() throws IOException {
@@ -50,11 +48,10 @@ public class ManageMaps {
         jMap.flush();
         jOut.flush();
         jOut.close();
-        System.out.println("Map saved to: " + featureMap.getAbsolutePath());
     }
 
     public static void save() throws IOException {
-        savePath = MapMakerApp.saveDialog();
+        String savePath = MapMakerApp.saveDialog();
         if(savePath == null) {
             return;
         }
@@ -63,7 +60,7 @@ public class ManageMaps {
             return;
         }
         if(checkInvalidName(mapName)) {
-            System.out.println("ERROR: Enter a valid file name!");
+            MapMakerApp.errorDialog("ERROR: illegal filename!");
             return;
         }
         saveFile = new File(savePath + "/" + mapName);
@@ -72,10 +69,11 @@ public class ManageMaps {
             if(DIRcheck) {
                 saveMap();
                 saveImage();
+                MapMakerApp.messageDialog("Saved to: \n" + saveFile.getAbsolutePath());
             }
-            else { System.out.println("Failed to create directory: " + saveFile.getAbsolutePath());}
+            else { MapMakerApp.errorDialog("Failed to create directory: \n" + saveFile.getAbsolutePath());}
         }
-        else { System.out.println("File already exists!");}
+        else { MapMakerApp.alertDialog("File already exists!");}
     }
 
 }

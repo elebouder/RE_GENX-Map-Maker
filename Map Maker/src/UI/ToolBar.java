@@ -96,12 +96,13 @@ public class ToolBar  extends JToolBar {
                 MapGen.undoNewSeg();
             }
             if(e.getActionCommand().equals(bClearMap.getActionCommand())) {
-                MapGen.clearAll();
+                int confirmVal = MapMakerApp.confirmDialog("Do you want to clear the map?");
+                if(confirmVal == JOptionPane.OK_OPTION) {MapGen.clearAll();}
             }
             if(e.getActionCommand().equals(bSaveMap.getActionCommand())) {
                 try {
                     ManageMaps.save();
-                } catch (IOException error) {error.printStackTrace();}
+                } catch (IOException error) {MapMakerApp.errorDialog(error.getMessage());}
             }
         }
     }

@@ -10,8 +10,6 @@ import java.awt.*;
 public class SegTemp {
     private static final int SEG_PIXELS_Y = 50;
     private static final int SEG_PIXELS_X = 50;
-    private static final int SEG_PIXELS = SEG_PIXELS_Y*SEG_PIXELS_X;
-    private int[][] seg;
     private RoadState segState;
     private int posX; //X position on map
     private int posY; //Y position on map
@@ -20,12 +18,6 @@ public class SegTemp {
         posX = x;
         posY = y;
         segState = r;
-        this.seg = new int[SEG_PIXELS_X][SEG_PIXELS];
-        for(int i = 0; i < SEG_PIXELS_Y; ++i) {
-            for(int j = 0; j < SEG_PIXELS_X; ++j) {
-                this.seg[i][j] = segState.stateVal;
-            }
-        }
     }
 
     public int getVal() {return segState.stateVal;}
@@ -46,7 +38,7 @@ public class SegTemp {
      */
     public void drawRoad(Graphics g) {
         if (segState == RoadState.ERASE) {
-            g.setColor(Color.blue);
+            g.setColor(Color.black);
             g.fillRect(posX - (SEG_PIXELS_X/2), posY - (SEG_PIXELS_Y/2),
                     SEG_PIXELS_X, SEG_PIXELS_Y);
         }
@@ -61,12 +53,12 @@ public class SegTemp {
                     SEG_PIXELS_X, SEG_PIXELS_Y);
         }
         if (segState == RoadState.START_LINE) {
-            g.setColor(Color.red);
+            g.setColor(Color.blue);
             g.fillRect(posX - (SEG_PIXELS_X/2), posY - (SEG_PIXELS_Y/2),
                     SEG_PIXELS_X, SEG_PIXELS_Y);
         }
         if (segState == RoadState.FINISH_LINE) {
-            g.setColor(Color.magenta);
+            g.setColor(Color.red);
             g.fillRect(posX - (SEG_PIXELS_X/2), posY - (SEG_PIXELS_Y/2),
                     SEG_PIXELS_X, SEG_PIXELS_Y);
         }

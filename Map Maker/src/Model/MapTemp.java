@@ -38,7 +38,7 @@ public class MapTemp {
     Modifies: this
     Effects: Increases the length and height of the feature map
      */
-    public void extendPixelsX() {
+    private void extendPixelsX() {
         int[][] temp = new int[mapPixelsX + 1][mapPixelsY];
         for(int i = 0; i < mapPixelsX; ++i) {
             for(int j = 0; j < mapPixelsY; ++j) {
@@ -48,7 +48,7 @@ public class MapTemp {
         this.map = temp;
         ++mapPixelsX;
     }
-    public void extendPixelsY() {
+    private void extendPixelsY() {
         int[][] temp = new int[mapPixelsX][mapPixelsY + 1];
         for(int i = 0; i < mapPixelsX; ++i) {
             for(int j = 0; j < mapPixelsY; ++j) {
@@ -64,10 +64,10 @@ public class MapTemp {
     Effect: checks if a pixel is out of bound of the feature map
     Parameters: possible x or y values on the feature map
      */
-    public boolean outOfUpperBoundX(int x) {return x >= mapPixelsX;}
-    public boolean outOfUpperBoundY(int y) {return y >= mapPixelsY;}
-    public boolean outOfLowerBoundX(int x) {return x < 0;}
-    public boolean outOfLowerBoundY(int y) {return y < 0;}
+    private boolean outOfUpperBoundX(int x) {return x >= mapPixelsX;}
+    private boolean outOfUpperBoundY(int y) {return y >= mapPixelsY;}
+    private boolean outOfLowerBoundX(int x) {return x < 0;}
+    private boolean outOfLowerBoundY(int y) {return y < 0;}
 
     /*
     Modifies: this
@@ -77,11 +77,11 @@ public class MapTemp {
     public void addSeg(SegTemp s) {
         while(outOfUpperBoundX(s.getXBound())) extendPixelsX();
         while(outOfUpperBoundY(s.getYBound())) extendPixelsY();
-        for(int i = 0; i < s.getPixelsY(); ++i) {
-            for (int j = 0; j < s.getPixelsX(); ++j) {
-                if(!outOfLowerBoundX(s.getPosX() - (s.getPixelsX()/2) + j)
-                        && !outOfLowerBoundY(s.getPosY() - (s.getPixelsY()/2) + i))
-                map[s.getPosX() - (s.getPixelsX()/2) + j][s.getPosY() - (s.getPixelsY()/2) + i]
+        for(int i = 0; i < SegTemp.getPixelsY(); ++i) {
+            for (int j = 0; j < SegTemp.getPixelsX(); ++j) {
+                if(!outOfLowerBoundX(s.getPosX() - (SegTemp.getPixelsX()/2) + j)
+                        && !outOfLowerBoundY(s.getPosY() - (SegTemp.getPixelsY()/2) + i))
+                map[s.getPosX() - (SegTemp.getPixelsX()/2) + j][s.getPosY() - (SegTemp.getPixelsY()/2) + i]
                         = s.getVal();
             }
         }
@@ -92,9 +92,11 @@ public class MapTemp {
     Effect: Removes the specified segment from the feature map
      */
     public void removeSeg(SegTemp s) {
-        for(int i = 0; i < s.getPixelsY(); ++i) {
-            for (int j = 0; j < s.getPixelsX(); ++j) {
-                    map[s.getPosX() - (s.getPixelsX()/2) + j][s.getPosY() - (s.getPixelsY()/2) + i] = 0;
+        for(int i = 0; i < SegTemp.getPixelsY(); ++i) {
+            for (int j = 0; j < SegTemp.getPixelsX(); ++j) {
+                if(!outOfLowerBoundX(s.getPosX() - (SegTemp.getPixelsX()/2) + j)
+                        && !outOfLowerBoundY(s.getPosY() - (SegTemp.getPixelsY()/2) + i))
+                    map[s.getPosX() - (SegTemp.getPixelsX()/2) + j][s.getPosY() - (SegTemp.getPixelsY()/2) + i] = 0;
             }
         }
     }

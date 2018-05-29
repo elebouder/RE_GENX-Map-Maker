@@ -25,8 +25,6 @@ public class MapGen extends JPanel {
     private static int numSegAdded; //Counter for number of segments added during one input instance
     private static MapGen onlyOne;
 
-    MouseHandler mHandler = new MouseHandler();
-
     /*
     Modifies: this.map, this.segList
     Effect: Adds a Segment to a map. Adds the same segment to a graphics list.
@@ -45,13 +43,13 @@ public class MapGen extends JPanel {
      */
     private void trackInput() {
         trackNumSegAdded.addLast(numSegAdded);
-        System.out.println(numSegAdded + " Segment(s) added");
         numSegAdded = 0;
     }
 
     private MapGen() {
+        MouseHandler mHandler = new MouseHandler();
         setPreferredSize(new Dimension(map.getCols(),map.getRows()));
-        setBackground(Color.blue);
+        setBackground(Color.black);
         addMouseListener(mHandler);
         addMouseMotionListener(mHandler);
     }
@@ -101,9 +99,8 @@ public class MapGen extends JPanel {
         map.checkSegExist(r);
     }
 
-    public Graphics getGraphics(Graphics g) {
+    public void getGraphics(Graphics g) {
         this.print(g);
-        return g;
     }
 
     @Override
@@ -131,8 +128,6 @@ public class MapGen extends JPanel {
             mousePosY = e.getY();
             collectInput();
             repaint();
-            System.out.println("added segment at: " + mousePosX + ", " + mousePosY
-                    + " Value is: " + map.getVal(mousePosX,mousePosY));
             e.consume();
         }
 
@@ -143,14 +138,11 @@ public class MapGen extends JPanel {
             mousePosY = e.getY();
             collectInput();
             repaint();
-            System.out.println("added segment at: " + mousePosX + ", " + mousePosY
-                    + " Value is: " + map.getVal(mousePosX,mousePosY));
             e.consume();
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            if(!enabled) return;
             trackInput();
         }
 
